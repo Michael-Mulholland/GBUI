@@ -16,22 +16,3 @@ alt="GMIT Logo" width="500" height="200"/>
 | **Lecturer** | Damien Costello |
 
 ***
-
-### Project Overview
-
-
-### Your README
-- Your README must at least contain the following items.
-
-
-
-
-***
-  
-### Resources
-Here is a list of resources you might review to complete this project.
-
-
-
-### MISC
-
