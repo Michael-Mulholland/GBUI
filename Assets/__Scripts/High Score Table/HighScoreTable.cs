@@ -4,14 +4,13 @@ using UnityEngine.UI;
 
 public class HighScoreTable : MonoBehaviour
 {
-    // == member variables ==
-    private Transform entryContainer;
-    private Transform entryTemplate;
+    // private fields
+    private List<Transform> highScoreEntryTransformList;
     private List<HighScoreEntry> highScoreEntryList;
     private HighScoreList highScoreList;
-    private List<Transform> highScoreEntryTransformList;
+    private Transform entryContainer;
+    private Transform entryTemplate;
 
-    // == gets/sets ==
     private void Awake() 
     {
         entryContainer = transform.Find("ScoreContainer");
@@ -22,7 +21,6 @@ public class HighScoreTable : MonoBehaviour
         highScoreList = SaveSystem.LoadHighScores();
         if(highScoreList != null)
         {
-            //highScoreEntryList = new List<HighScoreEntry>();
             highScoreEntryList = highScoreList.getHighScoreList();
         }
         else
@@ -66,7 +64,7 @@ public class HighScoreTable : MonoBehaviour
 
     private void CreateHighScoreTransform(HighScoreEntry highScoreEntry, Transform container, List<Transform> transformList)
     {
-        // == local variables ==
+        // local fields
         float templateHeight = 30f;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();

@@ -5,11 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class HighScoreEntry
 {
-    // == member variables ==
+    // public fields
     public int score;
     public string name;
-
-    // == member methods ==
     public HighScoreEntry(int score, string name)
     {
         this.score = score;

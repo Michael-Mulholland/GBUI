@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DisableOnStart : MonoBehaviour {
-
-    // Use this for initialization
+public class DisableOnStart : MonoBehaviour 
+{
     void Start () 
     {
         gameObject.SetActive (false);

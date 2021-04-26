@@ -5,10 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    // == member variables ==
+    // public fields
     public int score;
-
-    // == member methods ==
     public SaveData(int data)
     {
         score = data;

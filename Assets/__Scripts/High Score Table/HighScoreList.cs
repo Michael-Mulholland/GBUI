@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 [System.Serializable]
 public class HighScoreList
 {
-    // == member variables == 
+    // public fields
     public List<HighScoreEntry> scoreList;
 
-    // == gets/sets ==
+    // getter
     public HighScoreList(List<HighScoreEntry> scoreList)
     {
         this.scoreList = scoreList;

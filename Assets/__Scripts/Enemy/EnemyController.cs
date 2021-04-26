@@ -2,24 +2,29 @@
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
-public class EnemyController : MonoBehaviour {
-
-	private Transform enemyHolder;
-	public float speed;
-	public GameObject shot;
-	public float fireRate = 0.997f;
-
-    [SerializeField] private AudioClip shootClip;
+public class EnemyController : MonoBehaviour 
+{
+	// private fields
     [SerializeField][Range(0f, 1.0f)] private float shootVolume = 0.5f;
+    [SerializeField] private AudioClip shootClip;
+	private float enemyMoveRepeatTime = 0.3f;
+	private float enemyMoveTime = 0.1f;
     private AudioSource audioSource;
+	private Transform enemyHolder;
 
-	// Use this for initialization
+	// public fields
+	public float fireRate = 0.997f;
+	public GameObject shot;
+	public float speed;
+
+
 	void Start () {
 		// get the audio source
         audioSource = GetComponent<AudioSource>();
-		
-		InvokeRepeating ("MoveEnemy", 0.1f, 0.3f);
+		// get Transform		
 		enemyHolder = GetComponent<Transform>();
+		// move the enemy 
+		InvokeRepeating ("MoveEnemy", enemyMoveTime, enemyMoveRepeatTime);
 	}
 
 	void MoveEnemy()
@@ -34,14 +39,11 @@ public class EnemyController : MonoBehaviour {
 				return;
 			}
 
-			//EnemyBulletController called too?
 			if (Random.value > fireRate) {
-				// use a local AudioSource
             	audioSource.PlayOneShot(shootClip, shootVolume);
 
 				Instantiate (shot, enemy.position, enemy.rotation);
 			}
-
 
 			if (enemy.position.y <= -7) {
 				SceneManager.LoadScene("GameOver");
@@ -50,13 +52,11 @@ public class EnemyController : MonoBehaviour {
 
 		if (enemyHolder.childCount == 1) {
 			CancelInvoke ();
-			InvokeRepeating ("MoveEnemy", 0.1f, 0.25f);
+			InvokeRepeating ("MoveEnemy", enemyMoveTime, enemyMoveRepeatTime);
 		}
 
 		if (enemyHolder.childCount == 0) {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		}
 	}
-	
-
 }

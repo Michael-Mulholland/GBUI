@@ -2,20 +2,20 @@
 using UnityEngine.Windows.Speech;   // grammar recogniser
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
-using System.Collections.Generic;
-using System.Linq;
-
+using System.IO;
+using System.Text;  // for stringbuilder
 public class PauseMenu : MonoBehaviour
 {
-    // KeywordRecognizer object initializer
-    private KeywordRecognizer keywordRecognizer;
-    // Dictionary containing all defined keywords for the game
-    Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
-    public static bool GamePaused = false;
+    // private fields
+    // Speech Recognition Specification Grammar (SRSG) XML Grammar
+    // It looks for phrases
+    private GrammarRecognizer gr;
+    private string spokenWord = "";
 
+    // public fields
+    public static bool GamePaused = false;
     public GameObject pauseMenuUI;
     public AudioMixer audioMixer;
-
 
     private void Awake()
     {
@@ -24,43 +24,56 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        // Add words/sentence to dictionary and call the corresponding function */
-        keywords.Add("pause", () => {Pause();});
-        keywords.Add("pause game", () => {Pause();});
-        keywords.Add("pause the game", () => {Pause();});
-
-        keywords.Add("resume", () => {Resume();});
-        keywords.Add("resume game", () => {Resume();});
-        keywords.Add("resume the game", () => {Resume();});
-        // keywords.Add("start", () => {Resume();});
-        // keywords.Add("start game", () => {Resume();});
-        // keywords.Add("start the game", () => {Resume();});
-
-        keywords.Add("go to main menu", () => {LoadMenu();});
-        keywords.Add("load menu", () => {LoadMenu();});
-
-        keywords.Add("volume on", () => {VolumeOnOff(true);});
-
-        keywords.Add("volume off", () => {VolumeOnOff(false);});
-
-        keywords.Add("quit game", () => {QuitGame();});
-        
-        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
-        keywordRecognizer.OnPhraseRecognized += KeyWordRecognizerOnPhraseRecognized;
-        keywordRecognizer.Start();
+        // create a new GrammarRecognizer (passing in GameOverControls.xml)
+        gr = new GrammarRecognizer(Path.Combine(Application.streamingAssetsPath, "PauseControls.xml"), ConfidenceLevel.Low);
+        // once the word is recognised, call GR_OnPhraseRecognized
+        gr.OnPhraseRecognized += GR_OnPhraseRecognized;
+        // start the keyword recognizer
+        gr.Start();
     }
 
-    void KeyWordRecognizerOnPhraseRecognized(PhraseRecognizedEventArgs args)
+    private void GR_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        System.Action keywordAction;
-
-        if (keywords.TryGetValue(args.text, out keywordAction))
+        // create a new StringBuilder
+        StringBuilder message = new StringBuilder();
+        // read the semantic meanings from the args passed in.
+        SemanticMeaning[] meanings = args.semanticMeanings;
+        // use foreach to get all the meanings.
+        foreach(SemanticMeaning meaning in meanings)
         {
-            keywordAction.Invoke();
+            string keyString = meaning.key.Trim();
+            string valueString = meaning.values[0].Trim();
+            message.Append("Key: " + keyString + ", Value: " + valueString + " ");
+            spokenWord = valueString;
+            FireWeapon(spokenWord);
         }
     }
 
-
+    private void FireWeapon(string spokenWord) 
+    {
+        // switch on the spokenWord
+        switch(spokenWord)
+        {
+            case "pause":
+                Pause();
+                break;
+            case "resume":
+                Resume();
+                break;
+            case "menu":
+                LoadMenu();
+                break;
+            case "volume on":
+                Volume(true);
+                break;
+            case "volume off":
+                Volume(false);
+                break;
+            case "quit":
+                QuitGame();
+                break;
+        }    
+    }
 
     private void Update() 
     {
@@ -112,7 +125,7 @@ public class PauseMenu : MonoBehaviour
         audioMixer.SetFloat("volume", volume);
     }
 
-    public void VolumeOnOff(bool setMusic)
+    private void Volume(bool setMusic)
     {
         // turn the music on and off
         if(setMusic == false)

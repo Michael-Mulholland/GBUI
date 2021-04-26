@@ -154,6 +154,11 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 8.96
       objectReference: {fileID: 0}
+    - target: {fileID: 3113841973963039528, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 3113841973963039529, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}
       propertyPath: m_Sprite
@@ -174,6 +179,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113841974074776154, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3113841974074776155, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}
@@ -221,6 +231,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113841974303512665, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3113841974303512666, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}
@@ -307,6 +322,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyShips
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113841974558664565, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3113841974558664566, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}
@@ -433,6 +453,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3113841975244175699, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 3113841975244175700, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}
       propertyPath: m_Sprite
@@ -453,6 +478,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113841975336874839, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3113841975336874840, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}
@@ -521,6 +551,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 8.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113841975537992784, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3113841975537992785, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}
@@ -594,6 +629,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 8.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113841975952599847, guid: 19053b0e4d553df459a5297be4823b97,
+        type: 3}
+      propertyPath: enemyDamageTaken
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3113841975952599848, guid: 19053b0e4d553df459a5297be4823b97,
         type: 3}

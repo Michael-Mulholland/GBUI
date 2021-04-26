@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<grammar xml:lang="en-US"
+         tag-format="semantics/1.0" 
+         version="1.0" 
+         xmlns="http://www.w3.org/2001/06/grammar"
+         root="PlayerWeaponControls">
+
+  <rule id="PlayerWeaponControls">
+    <one-of>
+      <item>
+        <ruleref uri="#fire"/>
+      </item>
+      <item>
+        <ruleref uri="#automatic"/>
+      </item>
+      <item>
+        <ruleref uri="#stop"/>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="fire">
+    <one-of>
+      <item>
+        <tag>out.action = "fire";</tag>
+        <one-of>
+          <item>fire</item>
+          <item>fire weapon</item>
+          <item>shoot</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="automatic">
+    <one-of>
+      <item>
+        <tag>out.action = "automatic";</tag>
+        <one-of>
+          <item>main menu</item>
+          <item>automatic fire</item>
+          <item>keep firing</item>
+          <item>keep shooting</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="stop">
+    <one-of>
+      <item>
+        <tag>out.action = "stop";</tag>
+        <one-of>
+          <item>stop</item>
+          <item>stop firing</item>
+          <item>stop shooting</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+</grammar>

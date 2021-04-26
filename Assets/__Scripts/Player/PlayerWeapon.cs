@@ -1,29 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Windows.Speech;   // grammar recogniser
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Text;  // for stringbuilder
 
 [RequireComponent(typeof(AudioSource))]
 public class PlayerWeapon : MonoBehaviour
 {
-    // public fields
-    public bool fireMainWeapon;
-
     // == private fields ==
     [SerializeField][Range(0f, 1.0f)] private float shootVolume = 0.5f;
     [SerializeField] private float bulletSpeed = 6.0f;
-    [SerializeField] private float firingRate = 2f;
+    //[SerializeField] private float firingRate = 2f;
     [SerializeField] private Bullet bulletPrefab;
     [SerializeField] private AudioClip shootClip;
     private Coroutine firingCoroutine;
     private AudioSource audioSource;
     private GameObject bulletParent;
+    private string spokenWord = "";
+    private GrammarRecognizer gr;
 
-    // KeywordRecognizer object initializer
-    private KeywordRecognizer keywordRecognizer;
-    // Dictionary containing all defined keywords for the game
-    Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
+    // public fields
+    public bool fireMainWeapon;
 
     private void Start()
     {
@@ -37,34 +34,46 @@ public class PlayerWeapon : MonoBehaviour
             bulletParent = new GameObject("BulletParent");
         }
 
-        // Add words/sentence to dictionary and call the corresponding function */
-        keywords.Add("fire", () => {Fire();});
-        keywords.Add("fire weapon", () => {Fire();});
-        keywords.Add("shoot", () => {Fire();});
-
-        keywords.Add("automatic", () => {StartAutomaticFiring();});
-        keywords.Add("automatic fire", () => {StartAutomaticFiring();});
-        keywords.Add("keep firing", () => {StartAutomaticFiring();});
-        keywords.Add("keep shooting", () => {StartAutomaticFiring();});
-
-        keywords.Add("stop", () => {StopAutomaticFiring();});
-        keywords.Add("stop fire", () => {StopAutomaticFiring();});
-        keywords.Add("stop firing", () => {StopAutomaticFiring();});
-        keywords.Add("stop shooting", () => {StopAutomaticFiring();});
-        
-        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
-        keywordRecognizer.OnPhraseRecognized += KeyWordRecognizerOnPhraseRecognized;
-        keywordRecognizer.Start();
+        // create a new GrammarRecognizer (passing in GameOverControls.xml)
+        gr = new GrammarRecognizer(Path.Combine(Application.streamingAssetsPath, "PlayerWeaponControls.xml"), ConfidenceLevel.Low);
+        // once the word is recognised, call GR_OnPhraseRecognized
+        gr.OnPhraseRecognized += GR_OnPhraseRecognized;
+        // start the keyword recognizer
+        gr.Start();
     }
 
-    void KeyWordRecognizerOnPhraseRecognized(PhraseRecognizedEventArgs args)
+    private void GR_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        System.Action keywordAction;
-
-        if (keywords.TryGetValue(args.text, out keywordAction))
+        // create a new StringBuilder
+        StringBuilder message = new StringBuilder();
+        // read the semantic meanings from the args passed in.
+        SemanticMeaning[] meanings = args.semanticMeanings;
+        // use foreach to get all the meanings.
+        foreach(SemanticMeaning meaning in meanings)
         {
-            keywordAction.Invoke();
+            string keyString = meaning.key.Trim();
+            string valueString = meaning.values[0].Trim();
+            message.Append("Key: " + keyString + ", Value: " + valueString + " ");
+            spokenWord = valueString;
+            FireWeapon(spokenWord);
         }
+    }
+
+    private void FireWeapon(string spokenWord) 
+    {
+        // switch on the spokenWord
+        switch(spokenWord)
+        {
+            case "fire":
+                Fire();
+                break;
+            case "automatic":
+                StartAutomaticFiring();
+                break;
+            case "stop":
+                StopAutomaticFiring();
+                break;
+        }    
     }
 
     // coroutine returns an IEnumerator type

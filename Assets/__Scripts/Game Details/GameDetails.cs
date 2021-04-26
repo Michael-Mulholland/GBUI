@@ -5,24 +5,29 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(AudioSource))]
 public class GameDetails : MonoBehaviour
 {
+    // private fields
     [SerializeField][Range(0f, 1.0f)] private float shootVolume = 0.5f;
     [SerializeField] private AudioClip playerExplosion;
-    private AudioSource audioSource;
-    private static GameDetails instance;
     [SerializeField] private Text scoreText;
+    private static GameDetails instance;
+    private AudioSource audioSource;
+    private static int playerLives;
+    private float loadDelay = 1.0f;
+    private static int highScore;
+    //private static int score = 0;
+
+    // public fields
     [SerializeField] Text highScoreText;
     [SerializeField] Text playerLivesText;
-    private float loadDelay = 1.0f;
-    private static int score = 0;
     public static int currentScore;
-    private static int highScore;
-    private static int playerLives;
-    public int numberOfLives;
     public Image[] shipImageLifes;
-    public Sprite ship;
+    public int numberOfLives;
     public Sprite emptyShip;
+    public Sprite ship;
+
     private void Awake()
     {
+        // set player lives and the current score
         playerLives = 3;
         currentScore = 0;
 
@@ -105,7 +110,6 @@ public class GameDetails : MonoBehaviour
         // save the players lives left
         PlayerPrefs.SetInt("PlayerLives", playerLives);
 
-        // resets the hearts
         if (playerLives > numberOfLives)
         {
             playerLives = numberOfLives;

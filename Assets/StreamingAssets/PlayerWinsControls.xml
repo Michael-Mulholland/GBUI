@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<grammar xml:lang="en-US"
+         tag-format="semantics/1.0" 
+         version="1.0" 
+         xmlns="http://www.w3.org/2001/06/grammar"
+         root="playerwinscontrols">
+
+  <rule id="playerwinscontrols">
+    <one-of>
+      <item>
+        <ruleref uri="#restart"/>
+      </item>
+      <item>
+        <ruleref uri="#menu"/>
+      </item>
+      <item>
+        <ruleref uri="#quit"/>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="restart">
+    <one-of>
+      <item>
+        <tag>out.action = "restart";</tag>
+        <one-of>
+          <item>restart</item>
+          <item>restart game</item>
+          <item>restart the game</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="menu">
+    <one-of>
+      <item>
+        <tag>out.action = "menu";</tag>
+        <one-of>
+          <item>main menu</item>
+          <item>go to main menu</item>
+          <item>load menu</item>
+          <item>load the menu</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="quit">
+    <one-of>
+      <item>
+        <tag>out.action = "quit";</tag>
+        <one-of>
+          <item>quit</item>
+          <item>quit game</item>
+          <item>quit the game</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+</grammar>

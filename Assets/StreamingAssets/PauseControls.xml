@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<grammar xml:lang="en-US"
+         tag-format="semantics/1.0" 
+         version="1.0" 
+         xmlns="http://www.w3.org/2001/06/grammar"
+         root="pacmancontrols">
+
+  <rule id="pacmancontrols">
+    <one-of>
+      <item>
+        <ruleref uri="#pause"/>
+      </item>
+      <item>
+        <ruleref uri="#resume"/>
+      </item>
+      <item>
+        <ruleref uri="#menu"/>
+      </item>
+      <item>
+        <ruleref uri="#volumeon"/>
+      </item>
+      <item>
+        <ruleref uri="#volumeoff"/>
+      </item>
+      <item>
+        <ruleref uri="#quit"/>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="pause">
+    <one-of>
+      <item>
+        <tag>out.action = "pause";</tag>
+        <one-of>
+          <item>pause</item>
+          <item>pause game</item>
+          <item>pause the game</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="resume">
+    <one-of>
+      <item>
+        <tag>out.action = "resume";</tag>
+        <one-of>
+          <item>resume</item>
+          <item>resume game</item>
+          <item>resume the game</item>
+          <item>start</item>
+          <item>start game</item>
+          <item>start the game</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="menu">
+    <one-of>
+      <item>
+        <tag>out.action = "menu";</tag>
+        <one-of>
+          <item>main menu</item>
+          <item>go to main menu</item>
+          <item>load menu</item>
+          <item>load the menu</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="volumeon">
+    <one-of>
+      <item>
+        <tag>out.action = "volume on";</tag>
+        <one-of>
+          <item>volume on</item>
+          <item>turn volume on</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="volumeoff">
+    <one-of>
+      <item>
+        <tag>out.action = "volume off";</tag>
+        <one-of>
+          <item>volume off</item>
+          <item>turn volume off</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="quit">
+    <one-of>
+      <item>
+        <tag>out.action = "quit";</tag>
+        <one-of>
+          <item>quit</item>
+          <item>quit game</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+</grammar>

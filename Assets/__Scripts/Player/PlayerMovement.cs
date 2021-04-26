@@ -2,13 +2,16 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    private GameDetails gameDetails;
+    // private fields
     private BodySourceView bodySourceView;
+    private GameDetails gameDetails;
+
+    // public fields
     public bool playerDied = false;
 
     private void Awake() 
     {
-        // finds the object of type DialogueTrigger       
+        // finds the object of type GameDetails and BodySourceView
         gameDetails = GameObject.FindObjectOfType<GameDetails>();
         bodySourceView = GameObject.FindObjectOfType<BodySourceView>();
     }

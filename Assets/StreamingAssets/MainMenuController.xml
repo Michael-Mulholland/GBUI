@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<grammar xml:lang="en-US"
+         tag-format="semantics/1.0" 
+         version="1.0" 
+         xmlns="http://www.w3.org/2001/06/grammar"
+         root="mainmenucontrols">
+
+  <rule id="mainmenucontrols">
+    <one-of>
+      <item>
+        <ruleref uri="#play"/>
+      </item>
+      <item>
+        <ruleref uri="#options"/>
+      </item>
+      <item>
+        <ruleref uri="#quit"/>
+      </item>
+      <item>
+        <ruleref uri="#controls"/>
+      </item>
+      <item>
+        <ruleref uri="#highscore"/>
+      </item>
+      <item>
+        <ruleref uri="#volumeon"/>
+      </item>
+      <item>
+        <ruleref uri="#volumeoff"/>
+      </item>
+      <item>
+        <ruleref uri="#back"/>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="play">
+    <one-of>
+      <item>
+        <tag>out.action = "play";</tag>
+        <one-of>
+          <item>play</item>
+          <item>play game</item>
+          <item>start game</item>
+          <item>start the game</item>
+          <item>play the game</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="options">
+    <one-of>
+      <item>
+        <tag>out.action = "options";</tag>
+        <one-of>
+          <item>options</item>
+          <item>game options</item>
+          <item>go to the game options</item>
+          <item>go to game options</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="quit">
+    <one-of>
+      <item>
+        <tag>out.action = "quit";</tag>
+        <one-of>
+          <item>quit</item>
+          <item>quit game</item>
+          <item>quit the game</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="controls">
+    <one-of>
+      <item>
+        <tag>out.action = "controls";</tag>
+        <one-of>
+          <item>controls</item>
+          <item>game controls</item>
+          <item>go to game controls</item>
+          <item>go to the game controls</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="volumeon">
+    <one-of>
+      <item>
+        <tag>out.action = "volumeon";</tag>
+        <one-of>
+          <item>volume on</item>
+          <item>turn volume on</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="volumeoff">
+    <one-of>
+      <item>
+        <tag>out.action = "volumeoff";</tag>
+        <one-of>
+          <item>volume off</item>
+          <item>turn volume off</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="highscore">
+    <one-of>
+      <item>
+        <tag>out.action = "highscore";</tag>
+        <one-of>
+          <item>highscore</item>
+          <item>games highscore</item>
+          <item>show highscore</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="back">
+    <one-of>
+      <item>
+        <tag>out.action = "back";</tag>
+        <one-of>
+          <item>back</item>
+          <item>back to main menu</item>
+          <item>go back</item>
+          <item>back to the main menu</item>
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+</grammar>

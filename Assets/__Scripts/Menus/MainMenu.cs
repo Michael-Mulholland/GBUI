@@ -4,30 +4,27 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.Windows.Speech;   // grammar recogniser
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Text;  // for stringbuilder
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] GameObject gameControlsPanel;
+    // private fields
     [SerializeField] private Text highScoreText;
+    private string spokenWord = "";
+    private GrammarRecognizer gr;
+    private int backInteger;
+    private int highScore;
+
+    // public fields
+    [SerializeField] GameObject gameControlsPanel;
     [SerializeField] GameObject highscorePanel;
     [SerializeField] GameObject mainMenuPanel;
     [SerializeField] GameObject optionsPanel;
+    public static bool GamePaused = false;
     public GameObject pauseMenuUI;
-
     public AudioSource playSound;
     public AudioMixer audioMixer;
-    //private GrammarRecognizer gr;
-    public static bool GamePaused = false;
-    //private string spokenWord = "";
-     private int backInteger;
-    private int highScore;
-
-    // KeywordRecognizer object initializer
-    private KeywordRecognizer keywordRecognizer;
-
-    // Dictionary containing all defined keywords for the game
-    Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
     private void Awake() {
         highScore = PlayerPrefs.GetInt("HighScore", highScore);
@@ -36,53 +33,60 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        // Add words/sentence to dictionary and call the corresponding function */
-        keywords.Add("play", () => {Play();});
-        keywords.Add("play the game", () => {Play();});
-        keywords.Add("start game", () => {Play();});
-        keywords.Add("start the game", () => {Play();});
-
-        keywords.Add("options", () => {Options();});
-        keywords.Add("game options", () => {Options();});
-        keywords.Add("go to the game options", () => {Options();});
-
-        keywords.Add("quit", () => {Quit();});
-
-        keywords.Add("controls", () => {Controls();});
-        keywords.Add("game controls", () => {Controls();});
-        keywords.Add("go to the game controls", () => {Controls();});
-
-        keywords.Add("volumeon", () => {Volume(true);});
-        keywords.Add("turn volume on", () => {Volume(true);});
-
-        keywords.Add("volumeoff", () => {Volume(false);});
-        keywords.Add("turn volume off", () => {Volume(false);});
-
-        keywords.Add("highscore", () => {Highscore();});
-        keywords.Add("games highscore", () => {Highscore();});
-        keywords.Add("show highscore", () => {Highscore();});
-
-        keywords.Add("reset", () => {Reset();});
-        keywords.Add("reset highscore", () => {Reset();});
-        keywords.Add("clear highscore", () => {Reset();});
-
-        keywords.Add("back", () => {Back();});
-        keywords.Add("back to main menu", () => {Back();});
-        keywords.Add("go back", () => {Back();});
-        keywords.Add("back to the main menu", () => {Back();});
-        
-        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
-        keywordRecognizer.OnPhraseRecognized += KeyWordRecognizerOnPhraseRecognized;
-        keywordRecognizer.Start();
+        // create a new GrammarRecognizer (passing in MainMenuController.xml)
+        gr = new GrammarRecognizer(Path.Combine(Application.streamingAssetsPath, "MainMenuController.xml"), ConfidenceLevel.Low);
+        // once the word is recognised, call GR_OnPhraseRecognized
+        gr.OnPhraseRecognized += GR_OnPhraseRecognized;
+        // start the keyword recognizer
+        gr.Start();
     }
 
-    void KeyWordRecognizerOnPhraseRecognized(PhraseRecognizedEventArgs args)
+    private void GR_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        System.Action keywordAction;
-
-        if (keywords.TryGetValue(args.text, out keywordAction))
+        // create a new StringBuilder
+        StringBuilder message = new StringBuilder();
+        // read the semantic meanings from the args passed in.
+        SemanticMeaning[] meanings = args.semanticMeanings;
+        // use foreach to get all the meanings.
+        foreach(SemanticMeaning meaning in meanings)
         {
-            keywordAction.Invoke();
+            string keyString = meaning.key.Trim();
+            string valueString = meaning.values[0].Trim();
+            message.Append("Key: " + keyString + ", Value: " + valueString + " ");
+            spokenWord = valueString;
+            SpokenWord(spokenWord);
+        }
+    }
+
+    private void SpokenWord(string word) 
+    {
+        // switch on the spokenWord
+        switch(word)
+        {
+            case "play":
+                Play();
+                break;
+            case "options":
+                Options();
+                break;
+            case "quit":
+                Quit();
+                break;
+            case "controls":
+                Controls();
+                break;
+            case "highscore":
+                Highscore();
+                break;
+            case "volumeon":
+                Volume(true);
+                break;
+            case "volumeoff":
+                Volume(false);
+                break;
+            case "back":
+                Back();
+                break;
         }
     }
 
@@ -169,6 +173,7 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
+        // loads level 1
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -176,4 +181,11 @@ public class MainMenu : MonoBehaviour
     {
         playSound.Play();
     }   
+
+    public void GameVolume(float volume)
+    {
+        // allows me to turn the volume up and down
+        // within the main menu and pause settings
+        audioMixer.SetFloat("volume", volume);
+    }
 }

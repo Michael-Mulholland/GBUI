@@ -3087,13 +3087,13 @@ MonoBehaviour:
   scoreText: {fileID: 1987984735}
   highScoreText: {fileID: 338124488}
   playerLivesText: {fileID: 0}
-  numberOfLives: 3
   shipImageLifes:
   - {fileID: 108916671}
   - {fileID: 1379251212}
   - {fileID: 1972311277}
-  ship: {fileID: 21300000, guid: f8a95b1f979ad5b479deee0a2218b63f, type: 3}
+  numberOfLives: 3
   emptyShip: {fileID: 21300000, guid: 80922a23a013de84b8125f0f889d8cf7, type: 3}
+  ship: {fileID: 21300000, guid: f8a95b1f979ad5b479deee0a2218b63f, type: 3}
 --- !u!82 &1157056217
 AudioSource:
   m_ObjectHideFlags: 0
